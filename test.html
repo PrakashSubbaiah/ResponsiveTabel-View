@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table, td, th {
+border: 1px solid black;
+padding: 5px;
+}
+
+#table1 {
+border-collapse: collapse;
+width: 100%;
+padding: 20px;
+}
+
+#table2 {
+border-collapse: collapse;
+width: 100%;
+padding: 20px;
+}
+
+#outline{
+border: 1px solid black;
+padding: 20px;
+background-color: #8B4513;
+}
+
+#outline2{
+border: 1px solid black;
+padding: 20px;
+margin: 20px;
+background-color: #CD853F;
+}
+
+.left, .left1 {
+    background-color:#B8860B;
+}
+.right {
+    background-color:#DEB887;
+}
+
+.right1 {
+    background-color:#DEB887;
+}
+
+table, #table1, #table2, #outline, #outline2{
+    overflow-x:auto;
+}
+
+.left{
+    width:30%;
+}
+
+.left1{
+    width:30%;
+}
+
+
+@media (min-width:992px) {
+
+.left{
+    width:30%;
+}
+
+.left1{
+    width:50%;
+}
+
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+
+.left{
+    width:30%;
+}
+
+.left1{
+    width:50%;
+}
+
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+
+table, #table1, #table2, #outline, #outline2{
+    overflow-x:auto;
+}
+
+.left{
+    width:30%;
+}
+
+.left1{
+    width:50%;
+}
+}
+
+
+@media (min-width:320px) and (max-width: 575px){
+
+table, #table1, #table2, #outline, #outline2{
+    overflow-x:auto;
+}
+
+.left{
+    width:30%;
+}
+
+.left1{
+    width:30%;
+}
+}
+
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 767px) {
+
+table, #table1, #table1, #outline, #outline2{
+    overflow-x:auto;
+}
+.left{
+    width:30%;
+}
+
+.left1{
+    width:30%;
+}
+}
+
+
+
+</style>
+</head>
+
+<body>
+
+<div id="outline">
+    <div id="tabelDatas"></div>
+</div>
+
+<script>
+    
+/*Dynamic user input data 'persons'*/
+var persons = [{
+    Name: "Employee",
+    Company: "Trimble",
+    Employees: [{id : 12345, name: "Ramesh", job: "Developer"},
+            {id : 19786, name: "Vinoth", job: "QA"}]
+
+    }];
+
+var labelData = [];
+
+/*Print Employee details*/
+function subTableData(personed){
+
+    var subTabel = "";
+        
+
+    for (var i = 0; i < personed.length; i++) {
+        
+        subTabel+="<div id='outline2'>";
+
+        subTabel+="<table id='table2'>";
+
+        subTabel+="<tr>";
+
+        subTabel+="<th class='left1'>Id</th>";
+
+        subTabel+="<th class='right1'>"+personed[i].id+"</th>";
+
+        subTabel+="</tr>";
+
+        subTabel+="<tr>";
+
+        subTabel+="<th class='left1'>Name</th>";
+
+        subTabel+="<th class='right1'>"+personed[i].name+"</th>";
+
+        subTabel+="</tr>";
+
+        subTabel+="<tr>";
+
+        subTabel+="<th class='left1'>Job</th>";
+
+        subTabel+="<th class='right1'>"+personed[i].job+"</th>";
+
+        subTabel+="</tr>";
+
+        subTabel+="</table>";
+
+        subTabel+="</div>";
+    }
+    
+    subTabel += "";
+
+return subTabel;
+
+}
+
+/*Print Full Tabel details*/
+function walk(obj) {
+
+for (var key in obj) {
+
+        if (typeof obj[key] === "object") {
+
+        var label1 = "";
+
+        label1+="<div id='outline2'>";
+
+        label1+="<table id='table1'>";
+
+        label1+="<tr>";
+
+        label1+="<th class='left'>"+key+"</th>";
+
+        label1+="<th class='right'>"+subTableData(obj[key])+"</th>";
+
+        label1+="</tr>";
+
+        label1+="</table>";
+
+        label1+="</div>";
+
+        label1+="";
+
+        labelData.push(label1);
+
+        } else {
+
+        var label1 = "";
+
+        label1+="<div id='outline2'>";
+
+        label1+="<table id='table1'>";
+
+        label1+="<tr>";
+
+        label1+="<th class='left'>"+key+"</th>";
+
+        label1+="<th class='right'>"+obj[key]+"</th>";
+
+        label1+="</tr>";
+
+        label1+="</table>";
+
+        label1+="</div>";
+
+        label1+="";
+
+        labelData.push(label1);
+
+        }
+
+    }
+
+}
+
+
+var result = persons.reduce(function(result, item){
+                return item;
+             }, {});
+
+/*Call Function to load table data*/
+window.onload = walk(result);
+
+var datas ="";
+    for (var i = 0; i < labelData.length; i++) {
+        datas+=labelData[i];
+    }
+    datas+="";
+
+/*Print Table data in html page*/
+document.getElementById("tabelDatas").innerHTML = datas;
+
+</script>
+</body>
+</html>
